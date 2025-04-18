@@ -280,11 +280,32 @@
           box-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
         }
       }
+
+      /* تخصيص SweetAlert2 */
+      .swal2-popup {
+        font-family: "Cairo", sans-serif !important;
+        direction: rtl !important;
+      }
+
+      .swal2-title,
+      .swal2-content {
+        font-family: "Cairo", sans-serif !important;
+      }
+
+      .swal2-confirm {
+        background-color: #9932cc !important;
+      }
     </style>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
+    <!-- إضافة مكتبة SweetAlert2 -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.0/sweetalert2.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.0/sweetalert2.all.min.js"></script>
   </head>
   <body>
     <div class="video-background">
@@ -394,13 +415,31 @@
         }
       });
 
-      // منع إرسال النموذج (لأغراض العرض فقط)
+      // استخدام SweetAlert عند تقديم النموذج
       document.querySelector(".form").addEventListener("submit", function (e) {
         e.preventDefault();
         const email = document.querySelector(".form-input").value;
+
         if (email) {
-          alert("شكراً للتسجيل! سنتواصل معك قريباً.");
-          document.querySelector(".form-input").value = "";
+          Swal.fire({
+            title: "تم التسجيل بنجاح!",
+            text: "تم إضافة 500 نقطة إلى حسابك ✨",
+            icon: "success",
+            confirmButtonText: "رائع!",
+            background: "#121212",
+            color: "#ffffff",
+            iconColor: "#9932CC",
+            showClass: {
+              popup: "animate__animated animate__fadeInDown",
+            },
+            hideClass: {
+              popup: "animate__animated animate__fadeOutUp",
+            },
+            timer: 3000,
+            timerProgressBar: true,
+          }).then(() => {
+            document.querySelector(".form-input").value = "";
+          });
         }
       });
     </script>
