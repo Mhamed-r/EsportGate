@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EsportGate - بوابتك لعالم الرياضات الإلكترونية</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Cairo", sans-serif;
+      }
+
+      body {
+        background-color: #0d1117;
+        color: white;
+        overflow-x: hidden;
+        height: 100vh;
+      }
+
+      .video-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+      }
+
+      .video-background::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(13, 17, 23, 0.85),
+          rgba(67, 20, 124, 0.7)
+        );
+      }
+
+      .placeholder-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: linear-gradient(45deg, #1a1a2e, #16213e, #1a1a2e, #0f3460);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+      }
+
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .header {
+        padding: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 10;
+      }
+
+      .logo {
+        max-width: 240px;
+        height: auto;
+        filter: drop-shadow(0 0 10px rgba(138, 43, 226, 0.5));
+        transition: transform 0.3s ease;
+      }
+
+      .logo:hover {
+        transform: scale(1.05);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeIn 1s ease forwards;
+        animation-delay: 0.3s;
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .main-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        color: #ffd700;
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeIn 1s ease forwards;
+        animation-delay: 0.5s;
+      }
+
+      .countdown {
+        font-size: 2rem;
+        margin-bottom: 3rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeIn 1s ease forwards;
+        animation-delay: 0.7s;
+      }
+
+      .countdown span {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        margin: 0 5px;
+      }
+
+      .form-container {
+        width: 100%;
+        max-width: 500px;
+        margin-bottom: 2rem;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeIn 1s ease forwards;
+        animation-delay: 0.9s;
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .form-input {
+        padding: 1rem;
+        border: none;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        background: white;
+        color: #0d1117;
+      }
+
+      .form-button {
+        padding: 1rem;
+        border: none;
+        border-radius: 5px;
+        background: #ffd700;
+        color: black;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .form-button:hover {
+        background: #e5c100;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+      }
+
+      .bonus-text {
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        color: #fff;
+        opacity: 0.8;
+      }
+
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 3rem;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeIn 1s ease forwards;
+        animation-delay: 1.1s;
+      }
+
+      .social-icon {
+        font-size: 1.5rem;
+        color: white;
+        transition: all 0.3s ease;
+      }
+
+      .social-icon:hover {
+        transform: translateY(-5px);
+        color: #9932cc;
+      }
+
+      footer {
+        text-align: center;
+        padding: 1rem;
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.5);
+        position: relative;
+        z-index: 10;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .main-title {
+          font-size: 2.5rem;
+        }
+
+        .countdown {
+          font-size: 1.5rem;
+        }
+
+        .form {
+          padding: 1.5rem;
+        }
+
+        .logo {
+          max-width: 180px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .main-title {
+          font-size: 2rem;
+        }
+
+        .countdown {
+          font-size: 1.2rem;
+        }
+
+        .countdown span {
+          padding: 0.3rem 0.7rem;
+          margin: 0 2px;
+        }
+
+        .form {
+          padding: 1rem;
+        }
+
+        .logo {
+          max-width: 150px;
+        }
+      }
+
+      /* إضافة تأثيرات للأزرار والعناصر التفاعلية */
+      .glow-effect {
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          box-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
+        }
+        to {
+          box-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
+        }
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="video-background">
+      <div class="placeholder-video"></div>
+    </div>
+
+    <header class="header">
+      <img src="/api/placeholder/240/120" alt="EsportGate Logo" class="logo" />
+    </header>
+
+    <main class="container">
+      <h1 class="main-title">جاهز لدخول عالم التحدي؟</h1>
+
+      <div class="countdown">
+        <span id="days">05</span> أيام : <span id="hours">12</span> ساعة :
+        <span id="minutes">30</span> دقيقة
+      </div>
+
+      <div class="form-container">
+        <form class="form glow-effect">
+          <input
+            type="email"
+            class="form-input"
+            placeholder="أدخل بريدك الإلكتروني"
+            required
+          />
+          <button type="submit" class="form-button">سجّل الآن</button>
+          <p class="bonus-text">احصل على نقاط مجانية عند تسجيلك قبل الإطلاق!</p>
+        </form>
+      </div>
+
+      <div class="social-icons">
+        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+      </div>
+    </main>
+
+    <footer>&copy; 2025 EsportGate - جميع الحقوق محفوظة</footer>
+
+    <script>
+      // العد التنازلي
+      function updateCountdown() {
+        const days = document.getElementById("days");
+        const hours = document.getElementById("hours");
+        const minutes = document.getElementById("minutes");
+
+        let d = parseInt(days.innerText);
+        let h = parseInt(hours.innerText);
+        let m = parseInt(minutes.innerText);
+
+        m--;
+
+        if (m < 0) {
+          m = 59;
+          h--;
+        }
+
+        if (h < 0) {
+          h = 23;
+          d--;
+        }
+
+        if (d < 0) {
+          d = h = m = 0;
+        }
+
+        days.innerText = d < 10 ? "0" + d : d;
+        hours.innerText = h < 10 ? "0" + h : h;
+        minutes.innerText = m < 10 ? "0" + m : m;
+
+        if (d === 0 && h === 0 && m === 0) {
+          clearInterval(countdownInterval);
+        }
+      }
+
+      const countdownInterval = setInterval(updateCountdown, 60000);
+
+      // تأثيرات حركية عند التمرير
+      function animateOnScroll() {
+        const elements = document.querySelectorAll(
+          ".main-title, .countdown, .form-container, .social-icons"
+        );
+
+        elements.forEach((element) => {
+          const position = element.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (position < windowHeight - 100) {
+            element.style.opacity = "1";
+            element.style.transform = "translateY(0)";
+          }
+        });
+      }
+
+      window.addEventListener("scroll", animateOnScroll);
+
+      // تحميل الصفحة بتأثير تدريجي
+      window.addEventListener("load", function () {
+        document.body.classList.add("loaded");
+
+        // في الموقع الفعلي، يمكن استبدال هذا بشعارك الحقيقي
+        const logoPlaceholder = document.querySelector(".logo");
+        if (logoPlaceholder) {
+          logoPlaceholder.setAttribute("src", "Asset.png");
+        }
+      });
+
+      // منع إرسال النموذج (لأغراض العرض فقط)
+      document.querySelector(".form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const email = document.querySelector(".form-input").value;
+        if (email) {
+          alert("شكراً للتسجيل! سنتواصل معك قريباً.");
+          document.querySelector(".form-input").value = "";
+        }
+      });
+    </script>
+  </body>
+</html>
