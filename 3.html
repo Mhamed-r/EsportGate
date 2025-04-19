@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EsportGate - Coming Soon</title>
+    <!-- Essential Libraries -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.5/sweetalert2.min.css"
+    />
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <style>
+      :root {
+        --primary-color: #ffd700;
+        --secondary-color: #ff6600;
+        --accent-color: #00f3ff;
+        --pink-glow: #ff00ff;
+        --blue-glow: #00f3ff;
+        --dark-color: #000033;
+        --text-color: #ffffff;
+        --glow-color: rgba(255, 215, 0, 0.5);
+      }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      body {
+        font-family: "Tajawal", sans-serif;
+        background: linear-gradient(135deg, #0f0636 0%, #000033 100%);
+        color: var(--text-color);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Animated Background Effects */
+      .background-effects {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      .particles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .particle {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.3;
+        animation: float-particle 15s linear infinite;
+      }
+
+      .grid-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(
+            rgba(0, 243, 255, 0.05) 1px,
+            transparent 1px
+          ),
+          linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+        perspective: 1000px;
+        transform-style: preserve-3d;
+        animation: grid-animation 20s linear infinite;
+      }
+
+      .glowing-circles {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+      }
+
+      .glowing-circle {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.15;
+        animation: pulse 15s infinite alternate;
+      }
+
+      /* Main Container */
+      .content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        text-align: center;
+        z-index: 10;
+        width: 100%;
+        max-width: 900px;
+      }
+
+      /* Trophy and Logo */
+      .trophy-container {
+        position: relative;
+        margin-bottom: 2rem;
+        width: 100%;
+        max-width: 500px;
+        perspective: 1000px;
+      }
+
+      .trophy {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+        filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+        animation: float 5s ease-in-out infinite;
+      }
+
+      .logo {
+        position: absolute;
+        bottom: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        max-width: 350px;
+        z-index: 5;
+        filter: drop-shadow(0 0 15px rgba(0, 243, 255, 0.7));
+        animation: pulse-glow 3s infinite alternate;
+      }
+
+      .subtitle {
+        font-size: 2.2rem;
+        color: #ffd700;
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        opacity: 0;
+        animation: fade-in-up 1s ease forwards, glow-text 2s infinite alternate;
+        animation-delay: 0.5s;
+      }
+
+      /* Countdown Timer */
+      .countdown-container {
+        font-family: "Orbitron", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        width: 100%;
+        max-width: 500px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 1rem;
+        border-radius: 15px;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+        opacity: 0;
+        animation: fade-in-up 1s ease forwards;
+        animation-delay: 0.8s;
+      }
+
+      .countdown-unit {
+        display: flex;
+        align-items: baseline;
+      }
+
+      .countdown-unit span:first-child {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        text-shadow: 0 0 10px var(--glow-color);
+        font-weight: 700;
+        margin-right: 0.3rem;
+      }
+
+      .countdown-unit span:last-child {
+        font-size: 1rem;
+        color: var(--text-color);
+      }
+
+      .countdown-container span:not(.countdown-unit span) {
+        font-size: 2.5rem;
+        color: var(--accent-color);
+      }
+
+      /* Email Form */
+      .email-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+        max-width: 500px;
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fade-in-up 1s ease forwards;
+        animation-delay: 1.1s;
+      }
+
+      .email-input {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border-radius: 30px;
+        border: 2px solid var(--primary-color);
+        background: rgba(0, 0, 0, 0.5);
+        color: var(--text-color);
+        font-size: 1.1rem;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .email-input:focus {
+        outline: none;
+        box-shadow: 0 0 20px var(--primary-color);
+        border-color: var(--secondary-color);
+      }
+
+      .register-btn {
+        width: 100%;
+        padding: 1rem;
+        border-radius: 30px;
+        background: linear-gradient(45deg, #ffa500, #ff6600);
+        color: #000;
+        font-weight: 700;
+        font-size: 1.2rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .register-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: all 0.6s ease;
+        z-index: -1;
+      }
+
+      .register-btn:hover::before {
+        left: 100%;
+      }
+
+      .register-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(255, 165, 0, 0.4);
+      }
+
+      .register-btn:active {
+        transform: translateY(-1px);
+      }
+
+      /* Promo Text */
+      .promo-text {
+        color: white;
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        background: rgba(0, 0, 0, 0.3);
+        padding: 0.7rem 1.5rem;
+        border-radius: 30px;
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        opacity: 0;
+        animation: fade-in-up 1s ease forwards,
+          pulse-light 3s infinite alternate;
+        animation-delay: 1.4s;
+      }
+
+      .promo-text i {
+        color: var(--primary-color);
+        margin-left: 0.5rem;
+      }
+
+      /* Social Media Icons */
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-top: 1rem;
+        opacity: 0;
+        animation: fade-in-up 1s ease forwards;
+        animation-delay: 1.7s;
+      }
+
+      .social-icons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.5);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .social-icons a::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: -1;
+      }
+
+      .social-icons a:hover {
+        transform: translateY(-5px) rotate(360deg);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 15px var(--glow-color);
+      }
+
+      .social-icons a:hover::before {
+        opacity: 1;
+      }
+
+      .social-icons a:hover i {
+        color: #000;
+      }
+
+      /* Game Logos Background */
+      .game-logos {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        overflow: hidden;
+      }
+
+      .game-logo {
+        position: absolute;
+        transition: all 0.6s ease;
+        transform: perspective(1000px) rotateY(0deg);
+        opacity: 0;
+        animation: fadeInLogo 0.8s ease forwards;
+      }
+
+      .game-logo img {
+        max-width: 100px;
+        height: auto;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        transition: all 0.4s ease;
+        filter: brightness(0.7) contrast(1.2);
+      }
+
+      .logo-left img {
+        filter: drop-shadow(0 0 15px rgba(255, 0, 255, 0.4)) brightness(0.7);
+      }
+
+      .logo-right img {
+        filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.4)) brightness(0.7);
+      }
+
+      .game-logo:hover {
+        z-index: 10;
+      }
+
+      .game-logo:hover img {
+        transform: scale(1.15) translateY(-10px);
+        filter: brightness(1) contrast(1.3);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+      }
+
+      /* Audience Effect */
+      .audience {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 20%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200"><path d="M0,100 Q250,180 500,100 T1000,100 L1000,200 L0,200 Z" fill="rgba(0,0,0,0.7)"/></svg>')
+          no-repeat bottom center;
+        background-size: cover;
+        z-index: 2;
+      }
+
+      /* Light Streaks Effect */
+      .light-streaks {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .light-streak {
+        position: absolute;
+        height: 2px;
+        width: 150px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--accent-color),
+          transparent
+        );
+        animation: streak-animation 6s linear infinite;
+        opacity: 0;
+      }
+
+      /* Animations */
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotateY(0deg);
+        }
+        25% {
+          transform: translateY(-15px) rotateY(5deg);
+        }
+        50% {
+          transform: translateY(0) rotateY(0deg);
+        }
+        75% {
+          transform: translateY(-10px) rotateY(-5deg);
+        }
+      }
+
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          filter: drop-shadow(0 0 15px rgba(0, 243, 255, 0.7));
+        }
+        50% {
+          filter: drop-shadow(0 0 25px rgba(0, 243, 255, 1));
+        }
+      }
+
+      @keyframes glow-text {
+        0% {
+          text-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
+        }
+        100% {
+          text-shadow: 0 0 20px rgba(255, 215, 0, 1),
+            0 0 40px rgba(255, 102, 0, 0.5);
+        }
+      }
+
+      @keyframes pulse-light {
+        0% {
+          box-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+        }
+        100% {
+          box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+      }
+
+      @keyframes fade-in-up {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes float-particle {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.3;
+        }
+        90% {
+          opacity: 0.3;
+        }
+        100% {
+          transform: translateY(-100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      @keyframes grid-animation {
+        0% {
+          transform: perspective(500px) rotateX(15deg) translateZ(0);
+        }
+        100% {
+          transform: perspective(500px) rotateX(15deg) translateZ(-50px);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.1;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 0.2;
+        }
+      }
+
+      @keyframes streak-animation {
+        0% {
+          transform: translateX(-100%) rotate(45deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        80% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(100vw) rotate(45deg);
+          opacity: 0;
+        }
+      }
+
+      @keyframes fadeInLogo {
+        from {
+          opacity: 0;
+          transform: perspective(1000px) rotateY(45deg) translateX(-50px);
+        }
+        to {
+          opacity: 0.8;
+          transform: perspective(1000px) rotateY(0deg) translateX(0);
+        }
+      }
+
+      /* Responsive Design */
+      @media (min-width: 768px) {
+        .email-form {
+          flex-direction: row;
+        }
+
+        .email-input {
+          border-radius: 30px 0 0 30px;
+          text-align: right;
+        }
+
+        .register-btn {
+          border-radius: 0 30px 30px 0;
+          width: auto;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .subtitle {
+          font-size: 1.8rem;
+        }
+
+        .trophy {
+          max-width: 200px;
+        }
+
+        .countdown-unit span:first-child {
+          font-size: 2rem;
+        }
+
+        .countdown-container span:not(.countdown-unit span) {
+          font-size: 2rem;
+        }
+
+        .game-logo img {
+          max-width: 80px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .subtitle {
+          font-size: 1.5rem;
+        }
+
+        .trophy {
+          max-width: 150px;
+        }
+
+        .countdown-unit span:first-child {
+          font-size: 1.5rem;
+        }
+
+        .countdown-container span:not(.countdown-unit span) {
+          font-size: 1.5rem;
+        }
+
+        .social-icons {
+          gap: 1rem;
+        }
+
+        .social-icons a {
+          width: 40px;
+          height: 40px;
+          font-size: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Animated Background Effects -->
+    <div class="background-effects">
+      <div class="particles" id="particles"></div>
+      <div class="grid-overlay"></div>
+      <div class="glowing-circles" id="glowing-circles"></div>
+    </div>
+
+    <!-- Light Streaks Effect -->
+    <div class="light-streaks" id="light-streaks"></div>
+
+    <!-- Game Logos in Background -->
+    <div class="game-logos" id="game-logos">
+      <!-- Will be populated by JS -->
+    </div>
+
+    <!-- Audience Silhouette Effect -->
+    <div class="audience"></div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="trophy-container">
+        <img src="Asset2.png" alt="Trophy" class="trophy" id="trophy" />
+        <!-- <img src="Asset2.png" alt="EsportGate Logo" class="logo" id="logo" /> -->
+      </div>
+
+      <h1 class="subtitle">جاهز لدخول عالم التحدي؟</h1>
+
+      <div class="countdown-container">
+        <div class="countdown-unit">
+          <span id="days">05</span>
+          <span>يوم</span>
+        </div>
+        <span>:</span>
+        <div class="countdown-unit">
+          <span id="hours">12</span>
+          <span>ساعة</span>
+        </div>
+        <span>:</span>
+        <div class="countdown-unit">
+          <span id="minutes">30</span>
+          <span>دقيقة</span>
+        </div>
+      </div>
+
+      <form class="email-form" id="registrationForm">
+        <input
+          type="email"
+          class="email-input"
+          id="emailInput"
+          placeholder="بريدك الإلكتروني هنا"
+          required
+        />
+        <button type="submit" class="register-btn">سجّل الآن</button>
+      </form>
+
+      <div class="promo-text">
+        <i class="fas fa-gift"></i>
+        احصل على نقاط مجانية عند تسجيلك قبل الإطلاق!
+      </div>
+
+      <div class="social-icons">
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.5/sweetalert2.min.js"></script>
+    <script>
+      // Add this before the DOMContentLoaded event listener
+      function preloadImages() {
+        const imagePromises = gamesList.map((game) => {
+          return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = resolve;
+            img.onerror = reject;
+            img.src = `/Images/${game.name}.jpg`;
+          });
+        });
+
+        return Promise.all(imagePromises);
+      }
+
+      // Game logos in background
+      const gamesList = [
+        {
+          name: "PUBG",
+          position: "left",
+          top: "5%",
+          left: "10%",
+          logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/PUBG_Logo.png/800px-PUBG_Logo.png",
+        },
+        {
+          name: "LeagueofLegends",
+          position: "left",
+          top: "15%",
+          left: "7%",
+          logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/LoL_icon.svg/1200px-LoL_icon.svg.png",
+        },
+        {
+          name: "RainbowSixSiege",
+          position: "left",
+          top: "70%",
+          left: "5%",
+          logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Rainbow_Six_Siege_logo.svg/1200px-Rainbow_Six_Siege_logo.svg.png",
+        },
+        {
+          name: "Csgo",
+          position: "left",
+          top: "42%",
+          left: "8%",
+          logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Counter-strike_Global_Offensive_logo.svg/1200px-Counter-strike_Global_Offensive_logo.svg.png",
+        },
+        {
+          name: "Dota2",
+          position: "right",
+          top: "70%",
+          right: "10%",
+          logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Dota_2_Simple_Logo.svg/2560px-Dota_2_Simple_Logo.svg.png",
+        },
+        {
+          name: "FIFA",
+          position: "right",
+          top: "5%",
+          right: "15%",
+          logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/FIFA_logo.svg/1920px-FIFA_logo.svg.png",
+        },
+        {
+          name: "ApexLegends",
+          position: "right",
+          top: "15%",
+          right: "10%",
+          logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Apex_legends_cover.jpg/1200px-Apex_legends_cover.jpg",
+        },
+        {
+          name: "CallofDuty",
+          position: "right",
+          top: "25%",
+          right: "5%",
+          logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Call_of_duty_warzone_logo.svg/2560px-Call_of_duty_warzone_logo.svg.png",
+        },
+        {
+          name: "Fortnite",
+          position: "left",
+          top: "25%",
+          left: "5%",
+          logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/FortniteLogo.svg/1200px-FortniteLogo.svg.png",
+        },
+        {
+          name: "RocketLeague",
+          position: "left",
+          top: "60%",
+          left: "5%",
+          logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Rocket_League_logo.svg/2560px-Rocket_League_logo.svg.png",
+        },
+        {
+          name: "StreetFighter",
+          position: "right",
+          top: "60%",
+          right: "5%",
+          logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Street_Fighter_Logo.svg/2560px-Street_Fighter_Logo.svg.png",
+        },
+        {
+          name: "Minecraft",
+          position: "right",
+          top: "80%",
+          right: "10%",
+          logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Minecraft_logo.svg/2560px-Minecraft_logo.svg.png",
+        },
+        {
+          name: "FallGuys",
+          position: "left",
+          top: "85%",
+          left: "10%",
+          logo: "https://www.citypng.com/public/uploads/preview/hd-fall-guys-ultimate-knockout-square-logo-png-7017516947881522sdxsnidlr.png",
+        },
+      ];
+
+      // Modify the DOMContentLoaded event listener
+      document.addEventListener("DOMContentLoaded", function () {
+        // Show loading state
+        const content = document.querySelector(".content");
+        content.style.opacity = "0.5";
+
+        // Preload images then initialize
+        preloadImages()
+          .then(() => {
+            createParticles();
+            createGlowingCircles();
+            createLightStreaks();
+            loadGameLogos();
+            initCountdown();
+
+            // Show content with smooth transition
+            content.style.transition = "opacity 0.5s ease";
+            content.style.opacity = "1";
+          })
+          .catch((error) => {
+            console.error("Error loading images:", error);
+            // Still show content even if some images fail
+            content.style.opacity = "1";
+          });
+
+        // Handle form submission
+        document
+          .getElementById("registrationForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            const email = document.getElementById("emailInput").value;
+
+            // You would typically send this data to your server here
+            // For this example, we'll just show a success message
+            Swal.fire({
+              title: "شكراً لتسجيلك!",
+              text: "سنقوم بإعلامك عند إطلاق الموقع!",
+              icon: "success",
+              confirmButtonText: "موافق",
+              background: "#000033",
+              color: "#fff",
+              confirmButtonColor: "#ff6600",
+            });
+
+            // Clear the form
+            document.getElementById("emailInput").value = "";
+          });
+      });
+
+      // Add floating particles
+      function createParticles() {
+        const particlesContainer = document.getElementById("particles");
+        const particleCount = 50;
+
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement("div");
+          particle.className = "particle";
+
+          // Random size
+          const size = Math.random() * 4 + 1;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+
+          // Random position
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.top = `${Math.random() * 100}%`;
+
+          // Random animation duration and delay
+          const duration = Math.random() * 15 + 10;
+          const delay = Math.random() * 10;
+          particle.style.animationDuration = `${duration}s`;
+          particle.style.animationDelay = `${delay}s`;
+
+          particlesContainer.appendChild(particle);
+        }
+      }
+
+      // Add glowing background circles
+      function createGlowingCircles() {
+        const container = document.getElementById("glowing-circles");
+        const circleCount = 5;
+        const colors = [
+          "rgba(255, 0, 255, 0.3)",
+          "rgba(0, 255, 255, 0.3)",
+          "rgba(255, 215, 0, 0.3)",
+          "rgba(255, 102, 0, 0.3)",
+          "rgba(0, 102, 255, 0.3)",
+        ];
+
+        for (let i = 0; i < circleCount; i++) {
+          const circle = document.createElement("div");
+          circle.className = "glowing-circle";
+
+          // Random size
+          const size = Math.random() * 300 + 200;
+          circle.style.width = `${size}px`;
+          circle.style.height = `${size}px`;
+
+          // Random position
+          circle.style.left = `${Math.random() * 100 - 20}%`;
+          circle.style.top = `${Math.random() * 100 - 20}%`;
+
+          // Random color
+          circle.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+
+          // Random animation duration and delay
+          const duration = Math.random() * 10 + 5;
+          const delay = Math.random() * 5;
+          circle.style.animationDuration = `${duration}s`;
+          circle.style.animationDelay = `${delay}s`;
+
+          container.appendChild(circle);
+        }
+      }
+
+      // Create light streaks
+      function createLightStreaks() {
+        const container = document.getElementById("light-streaks");
+        const streakCount = 8;
+
+        for (let i = 0; i < streakCount; i++) {
+          const streak = document.createElement("div");
+          streak.className = "light-streak";
+
+          // Random position
+          streak.style.top = `${Math.random() * 100}%`;
+          streak.style.left = `-150px`;
+
+          // Random animation duration and delay
+          const duration = Math.random() * 8 + 4;
+          const delay = Math.random() * 15;
+          streak.style.animationDuration = `${duration}s`;
+          streak.style.animationDelay = `${delay}s`;
+
+          // Random rotation
+          const rotation = Math.random() * 45 - 22.5;
+          streak.style.transform = `rotate(${rotation}deg)`;
+
+          container.appendChild(streak);
+        }
+      }
+
+      function loadGameLogos() {
+        const logosContainer = document.getElementById("game-logos");
+
+        gamesList.forEach((game, index) => {
+          const logoContainer = document.createElement("div");
+          logoContainer.className = `game-logo ${
+            game.position === "left" ? "logo-left" : "logo-right"
+          }`;
+
+          // Improved positioning with slight randomization
+          if (game.position === "left") {
+            logoContainer.style.left = `calc(${game.left} + ${
+              Math.random() * 5
+            }%)`;
+          } else {
+            logoContainer.style.right = `calc(${game.right} + ${
+              Math.random() * 5
+            }%)`;
+          }
+
+          logoContainer.style.top = `calc(${game.top} + ${Math.random() * 3}%)`;
+
+          // Create image with loading optimization
+          const img = document.createElement("img");
+          img.loading = "lazy"; // Lazy loading for better performance
+          img.src = `/Images/${game.name}.jpg`;
+          img.alt = game.name;
+          img.title = game.name;
+
+          // Add animation delay and random rotation
+          logoContainer.style.animationDelay = `${index * 0.15}s`;
+          logoContainer.style.transform = `rotate(${Math.random() * 6 - 3}deg)`;
+
+          // Add interactive hover effect
+          logoContainer.addEventListener("mouseover", () => {
+            const otherLogos = document.querySelectorAll(
+              ".game-logo:not(:hover)"
+            );
+            otherLogos.forEach((logo) => {
+              logo.style.opacity = "0.3";
+              logo.style.transform = "scale(0.95)";
+            });
+          });
+
+          logoContainer.addEventListener("mouseout", () => {
+            const allLogos = document.querySelectorAll(".game-logo");
+            allLogos.forEach((logo) => {
+              logo.style.opacity = "0.8";
+              logo.style.transform = "scale(1)";
+            });
+          });
+
+          logoContainer.appendChild(img);
+          logosContainer.appendChild(logoContainer);
+        });
+      }
+
+      // Initialize countdown timer
+      function initCountdown() {
+        // Set the launch date (example: 5 days from now)
+        const launchDate = new Date();
+        launchDate.setDate(launchDate.getDate() + 5);
+        launchDate.setHours(launchDate.getHours() + 12);
+        launchDate.setMinutes(launchDate.getMinutes() + 30);
+
+        // Update timer initially
+        updateCountdown(launchDate);
+
+        // Update timer every second
+        setInterval(() => {
+          updateCountdown(launchDate);
+        }, 1000);
+      }
+
+      // Update countdown display
+      function updateCountdown(launchDate) {
+        const now = new Date();
+        const diff = launchDate - now;
+
+        // Calculate days, hours, minutes, seconds
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+        // Update DOM
+        document.getElementById("days").textContent = days
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("hours").textContent = hours
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("minutes").textContent = minutes
+          .toString()
+          .padStart(2, "0");
+      }
+    </script>
+  </body>
+</html>
