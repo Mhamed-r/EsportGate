@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EsportGate - Coming Soon</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- SweetAlert2 -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.5/sweetalert2.min.css"
+    />
+    <!-- Arabic Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Tajawal", sans-serif;
+      }
+
+      body {
+        overflow: hidden;
+        position: relative;
+        background: #030318;
+      }
+
+      /* Enhanced Background Layers */
+      .bg-layers {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .bg-pattern {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            135deg,
+            rgba(1, 8, 46, 0.9),
+            rgba(0, 6, 20, 0.95)
+          ),
+          linear-gradient(45deg, transparent 65%, rgba(0, 243, 255, 0.15)),
+          repeating-linear-gradient(
+            -45deg,
+            rgba(0, 243, 255, 0.05),
+            rgba(0, 243, 255, 0.05) 1px,
+            transparent 1px,
+            transparent 15px
+          );
+      }
+
+      /* Improved Game Grid */
+      .game-grid {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        padding: 4rem;
+        opacity: 0.8;
+        z-index: 0;
+      }
+
+      /* Enhanced Game Cards */
+      .game-card {
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(0, 243, 255, 0.3);
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+        padding: 2rem 1rem;
+        text-align: center;
+        border-radius: 8px;
+        transition: all 0.5s ease;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 1.2rem;
+        font-weight: bold;
+        transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        background-position: center;
+        background-blend-mode: overlay;
+        min-height: 200px;
+      }
+
+      .game-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          225deg,
+          transparent,
+          rgba(0, 243, 255, 0.1),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+
+      .game-card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+      }
+
+      .game-card img {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 10px;
+        filter: drop-shadow(0 0 5px rgba(0, 243, 255, 0.5));
+        transition: all 0.5s ease;
+      }
+
+      .game-card:hover {
+        border-color: #00f3ff;
+        box-shadow: 0 0 30px rgba(0, 243, 255, 0.4);
+        transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1.05);
+        color: #fff;
+        text-shadow: 0 0 10px rgba(0, 243, 255, 0.8);
+        z-index: 10;
+        background: rgba(0, 10, 40, 0.6);
+      }
+
+      .game-card:hover img {
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 8px rgba(0, 243, 255, 0.8));
+      }
+
+      .game-card:hover::before {
+        opacity: 1;
+      }
+
+      /* Mouse Glow Effect */
+      .mouse-glow {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(255, 215, 0, 0.1) 0%,
+          rgba(0, 0, 0, 0.9) 80%
+        );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Video Background */
+      .video-background {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -2;
+        opacity: 0.4;
+      }
+
+      /* Content Section */
+      .content {
+        position: relative;
+        z-index: 5;
+        text-align: center;
+        color: white;
+        padding: 20px;
+      }
+
+      /* Logo Enhancements */
+      .logo-container {
+        position: relative;
+        margin: 3rem auto;
+        width: 60vw;
+        max-width: 600px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .logo-glow {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(255, 215, 0, 0.4) 0%,
+          transparent 70%
+        );
+        mix-blend-mode: screen;
+        animation: pulse 3s infinite;
+      }
+
+      .logo {
+        width: 120px;
+        filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.7));
+        animation: glow 2s infinite alternate;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Main Heading */
+      h1 {
+        color: #ffd700;
+        font-size: 3.5em;
+        margin: 2rem 0;
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+      }
+
+      /* Countdown Timer */
+      .countdown {
+        font-size: 2.5em;
+        margin: 2rem 0;
+        direction: ltr;
+        color: #fff;
+        text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+      }
+
+      /* Form Elements */
+      .email-form {
+        margin: 30px auto;
+        max-width: 500px;
+      }
+
+      .email-input {
+        padding: 15px 25px;
+        font-size: 1.2em;
+        border: 2px solid #00f7ff;
+        border-radius: 30px;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        margin: 20px auto;
+        width: 400px;
+        max-width: 80%;
+        transition: all 0.3s ease;
+        display: block;
+      }
+
+      .email-input:focus {
+        outline: none;
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+        background: rgba(0, 15, 30, 0.6);
+      }
+
+      .register-btn {
+        background: linear-gradient(135deg, #ffd700, #ffb700);
+        color: #000;
+        padding: 15px 40px;
+        border: none;
+        border-radius: 30px;
+        font-size: 1.3em;
+        cursor: pointer;
+        transition: 0.3s;
+        margin: 10px;
+        font-weight: bold;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+      }
+
+      .register-btn:hover {
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+        transform: scale(1.05);
+      }
+
+      /* Social Media Icons */
+      .social-icons {
+        position: fixed;
+        bottom: 30px;
+        width: 100%;
+        font-size: 1.8em;
+        z-index: 5;
+        text-align: center;
+      }
+
+      .social-icons a {
+        color: white;
+        margin: 0 15px;
+        text-decoration: none;
+        text-shadow: 0 0 10px white;
+        position: relative;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+
+      .social-icons a:hover {
+        color: #ffd700;
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+        transform: translateY(-5px);
+      }
+
+      .social-icons a i {
+        font-size: 1.5em;
+      }
+
+      /* Animations */
+      @keyframes glow {
+        from {
+          opacity: 0.8;
+          filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+        }
+        to {
+          opacity: 1;
+          filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.3;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.7;
+          transform: scale(1.1);
+        }
+      }
+
+      /* SweetAlert Customization */
+      .swal2-popup {
+        font-family: "Tajawal", sans-serif !important;
+        background: rgba(1, 8, 46, 0.95) !important;
+        border: 2px solid #00f3ff !important;
+        box-shadow: 0 0 30px rgba(0, 243, 255, 0.4) !important;
+      }
+
+      .swal2-title,
+      .swal2-content {
+        color: white !important;
+      }
+
+      .swal2-confirm {
+        background: linear-gradient(135deg, #ffd700, #ffb700) !important;
+        color: black !important;
+        font-weight: bold !important;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1200px) {
+        .game-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
+          padding: 2rem;
+        }
+        h1 {
+          font-size: 2.8em;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .game-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1rem;
+          padding: 1rem;
+        }
+        .logo-container {
+          width: 90vw;
+        }
+        h1 {
+          font-size: 2em;
+        }
+        .countdown {
+          font-size: 1.5em;
+        }
+        .logo {
+          width: 80px;
+        }
+        .game-card {
+          padding: 1rem 0.5rem;
+          font-size: 1rem;
+          min-height: 150px;
+        }
+        .game-card img {
+          width: 48px;
+          height: 48px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .game-grid {
+          grid-template-columns: 1fr;
+        }
+        h1 {
+          font-size: 1.8em;
+        }
+        .social-icons a {
+          margin: 0 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-layers">
+      <div class="bg-pattern"></div>
+      <div class="game-grid">
+        <div
+          class="game-card"
+          style="background-image: url('/Images/FC25cover.jpg')"
+        >
+          <img src="/Images/FC25.jpg" alt="FIFA" />
+          <span>FIFA</span>
+        </div>
+        <div
+          class="game-card"
+          style="background-image: url('/Images/Apexlegendscover.jpg')"
+        >
+          <img src="/Images/ApexLegends.jpg" alt="APEX LEGENDS" />
+          <span>APEX LEGENDS</span>
+        </div>
+        <div
+          class="game-card"
+          style="background-image: url('/Images/CallOfDutyWarzonecover.jpg')"
+        >
+          <img src="/Images/CallOfDutyWarzone.jpg" alt="CALL OF DUTY" />
+          <span>CALL OF DUTY</span>
+        </div>
+        <div
+          class="game-card"
+          style="background-image: url('/api/placeholder/300/200')"
+        >
+          <img src="/api/placeholder/64/64" alt="VALORANT" />
+          <span>VALORANT</span>
+        </div>
+        <div
+          class="game-card"
+          style="background-image: url('/api/placeholder/300/200')"
+        >
+          <img src="/api/placeholder/64/64" alt="RAINBOW SIX" />
+          <span>RAINBOW SIX</span>
+        </div>
+        <div
+          class="game-card"
+          style="background-image: url('/api/placeholder/300/200')"
+        >
+          <img src="/api/placeholder/64/64" alt="ROCKET LEAGUE" />
+          <span>ROCKET LEAGUE</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mouse-glow" id="glow"></div>
+
+    <video autoplay muted loop class="video-background">
+      <source src="your-video.mp4" type="video/mp4" />
+    </video>
+
+    <div class="content">
+      <div class="logo-container">
+        <div class="logo-glow"></div>
+        <img src="Asset2.png" class="logo" alt="EsportGate Logo" />
+      </div>
+
+      <h1>جاهز لدخول عالم التحدي؟</h1>
+
+      <div class="countdown" id="countdown">05 أيام : 12 ساعة : 30 دقيقة</div>
+
+      <form class="email-form" id="registrationForm">
+        <input
+          type="email"
+          class="email-input"
+          id="emailInput"
+          placeholder="بريدك الإلكتروني هنا"
+          required
+        />
+        <button type="submit" class="register-btn">
+          <i class="fas fa-user-plus me-2"></i>سجّل الآن
+        </button>
+      </form>
+
+      <p
+        style="
+          color: white;
+          margin-top: 20px;
+          font-size: 1.2em;
+          text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        "
+      >
+        <i class="fas fa-gift me-2"></i>احصل على نقاط مجانية عند تسجيلك قبل
+        الإطلاق!
+      </p>
+    </div>
+
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="#"><i class="fab fa-discord"></i></a>
+    </div>
+
+    <!-- Bootstrap, jQuery, SweetAlert2 Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.5/sweetalert2.min.js"></script>
+
+    <script>
+      // Enhanced Mouse Glow Effect
+      document.addEventListener("mousemove", (e) => {
+        const glow = document.getElementById("glow");
+        glow.style.background = `radial-gradient(circle at ${e.pageX}px ${e.pageY}px, 
+                rgba(255, 215, 0, 0.15) 0%, 
+                rgba(0, 0, 0, 0.9) 70%)`;
+      });
+
+      // Dynamic Countdown Timer
+      const countDownDate = new Date().getTime() + 5 * 24 * 60 * 60 * 1000;
+
+      const updateCountdown = () => {
+        const now = new Date().getTime();
+        const distance = countDownDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+        document.getElementById("countdown").innerHTML = `${
+          days < 10 ? "0" + days : days
+        } أيام : ${hours < 10 ? "0" + hours : hours} ساعة : ${
+          minutes < 10 ? "0" + minutes : minutes
+        } دقيقة`;
+
+        setTimeout(updateCountdown, 1000);
+      };
+
+      // Enhanced 3D Card Hover Effect
+      document.querySelectorAll(".game-card").forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const angleX = (y - centerY) / 10;
+          const angleY = (centerX - x) / 10;
+
+          card.style.transform = `
+            perspective(1000px) 
+            rotateX(${angleX}deg) 
+            rotateY(${angleY}deg)
+            scale(1.05)
+          `;
+
+          // Dynamic shadow effect
+          card.style.boxShadow = `
+            ${(x - centerX) / 5}px 
+            ${(y - centerY) / 5}px 
+            20px rgba(0, 243, 255, 0.3)
+          `;
+        });
+
+        card.addEventListener("mouseleave", () => {
+          card.style.transform =
+            "perspective(1000px) rotateX(5deg) rotateY(5deg)";
+          card.style.boxShadow = "0 0 15px rgba(0, 243, 255, 0.1)";
+        });
+      });
+
+      // Form Submission with SweetAlert2
+      document
+        .getElementById("registrationForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const email = document.getElementById("emailInput").value;
+
+          if (email) {
+            Swal.fire({
+              title: "تم التسجيل بنجاح!",
+              text: "شكراً لتسجيلك! سنبقيك على اطلاع بآخر التحديثات.",
+              icon: "success",
+              confirmButtonText: "رائع!",
+              background: "rgba(1, 8, 46, 0.95)",
+              backdrop: `rgba(0, 0, 0, 0.8)`,
+              showClass: {
+                popup: "animate__animated animate__fadeInDown",
+              },
+              hideClass: {
+                popup: "animate__animated animate__fadeOutUp",
+              },
+            }).then(() => {
+              document.getElementById("emailInput").value = "";
+            });
+          } else {
+            Swal.fire({
+              title: "خطأ!",
+              text: "يرجى إدخال بريد إلكتروني صالح",
+              icon: "error",
+              confirmButtonText: "حسناً",
+              background: "rgba(1, 8, 46, 0.95)",
+            });
+          }
+        });
+
+      updateCountdown();
+    </script>
+  </body>
+</html>
