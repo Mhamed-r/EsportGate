@@ -3,717 +3,945 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EsportGate - بطولة الألعاب الإلكترونية</title>
+    <title>ESPORTGATE - بطولة الألعاب الإلكترونية</title>
+    <!-- Bootstrap CSS -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <!-- Font Awesome for Social Media Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom CSS -->
     <style>
+      /* Google Fonts Import */
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap");
+
+      /* Global Styles */
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: "Tajawal", Arial, sans-serif;
       }
 
       body {
-        background-color: #0c0026;
-        min-height: 100vh;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        background-image: linear-gradient(45deg, #0f0039, #1e005a);
+        font-family: "Orbitron", sans-serif;
+        background-color: #000;
+        color: #fff;
         overflow-x: hidden;
       }
 
-      .background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -3;
-        opacity: 0.3;
-        background: url("/api/placeholder/1920/1080") center/cover no-repeat;
-      }
-
-      .light-effect {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        background: radial-gradient(
-          circle at 50% 50%,
-          rgba(128, 0, 255, 0.3),
-          transparent 60%
-        );
-        pointer-events: none;
-      }
-
-      /* Audience overlay */
-      .audience-overlay {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 25%;
-        z-index: -2;
-        background: url("/api/placeholder/1920/500") bottom/cover no-repeat;
-        opacity: 0.3;
-        filter: brightness(0.5) contrast(1.2);
-      }
-
+      /* Main Container */
       .main-container {
-        display: flex;
-        width: 100%;
-        max-width: 1400px;
-        min-height: 100vh;
         position: relative;
+        width: 100%;
+        min-height: 100vh;
+        background: linear-gradient(
+          to right,
+          rgba(124, 0, 179, 0.7),
+          rgba(8, 24, 97, 0.7)
+        );
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
-      .games-sidebar {
-        width: 230px;
-        position: fixed;
+      .overlay {
+        position: absolute;
         top: 0;
-        bottom: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 20px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
         z-index: 1;
       }
 
-      .right-games {
-        right: 0;
-        align-items: flex-end;
-        background: linear-gradient(to left, rgba(12, 0, 38, 0.8), transparent);
+      .content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
       }
 
-      .left-games {
-        left: 0;
+      /* Game Logos Styling */
+      .game-logos {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 80vh;
+        width: 25%;
+        padding: 30px 0;
+      }
+
+      .left-logos {
         align-items: flex-start;
-        background: linear-gradient(
-          to right,
-          rgba(12, 0, 38, 0.8),
-          transparent
-        );
+        padding-left: 40px;
       }
 
-      .game {
-        margin: 12px 0;
+      .right-logos {
+        align-items: flex-end;
+        padding-right: 40px;
+      }
+
+      .logo {
         font-weight: bold;
-        font-size: 16px;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        text-align: center;
-        padding: 8px 15px;
-        border-radius: 4px;
-        width: 180px;
-        text-shadow: 0 0 10px currentColor;
+        letter-spacing: 1px;
+        margin: 8px 0;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        position: relative;
+      }
+
+      /* Left Side Logos (Pink/Purple) */
+      .pubg {
+        color: #ff00ff;
+        font-size: 2.2rem;
+        text-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
+        border: 2px solid #ff00ff;
+        padding: 5px 15px;
+        border-radius: 3px;
+        box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+      }
+
+      .lol {
+        color: #ff00ff;
+        font-size: 1.3rem;
+        line-height: 1.1;
+        text-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+        font-weight: 800;
+      }
+
+      .colquon {
+        color: #ff00ff;
+        font-size: 1.8rem;
+        font-weight: 900;
+        letter-spacing: 2px;
+      }
+
+      .csgo {
+        display: none; /* Using csgo2 instead */
+      }
+
+      .csgo2 {
+        color: #ff00ff;
+        font-size: 1.6rem;
+        font-weight: 800;
         letter-spacing: 1px;
       }
 
-      .game:hover {
-        transform: translateX(-5px) scale(1.05);
-        box-shadow: 0 0 15px currentColor;
-      }
-
-      .game-pink {
+      .rainbow,
+      .rainbow2 {
         color: #ff00ff;
-        text-shadow: 0 0 10px #ff00ff;
-        border: 1px solid rgba(255, 0, 255, 0.3);
-        background-color: rgba(255, 0, 255, 0.1);
+        font-family: "Arial", sans-serif;
+        font-style: italic;
+        text-transform: uppercase;
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+        text-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
       }
 
-      .game-blue {
-        color: #00ffff;
-        text-shadow: 0 0 10px #00ffff;
-        border: 1px solid rgba(0, 255, 255, 0.3);
-        background-color: rgba(0, 255, 255, 0.1);
+      .fallguys {
+        color: #ff00ff;
+        font-size: 1.4rem;
+        line-height: 1;
+        font-weight: 900;
       }
 
+      .fallguys::first-line {
+        font-size: 1.8rem;
+      }
+
+      /* Right Side Logos (Blue) */
+      .fifa {
+        color: #00ccff;
+        font-size: 2.5rem;
+        font-weight: 900;
+        text-shadow: 0 0 15px rgba(0, 204, 255, 0.8);
+      }
+
+      .apex {
+        color: #00ccff;
+        font-size: 1.5rem;
+        line-height: 1.1;
+        font-weight: 800;
+      }
+
+      .apex::first-line {
+        font-size: 1.8rem;
+      }
+
+      .cod {
+        color: #00ccff;
+        font-size: 1.6rem;
+        font-weight: 800;
+        letter-spacing: 0px;
+      }
+
+      .fortnite {
+        color: #00ccff;
+        font-size: 1.8rem;
+        font-weight: 900;
+        letter-spacing: 1px;
+        text-shadow: 0 0 15px rgba(0, 204, 255, 0.8);
+      }
+
+      .rocketleague {
+        color: #00ccff;
+        font-size: 1.4rem;
+        line-height: 1.1;
+        font-weight: 800;
+      }
+
+      .rocketleague::first-line {
+        font-size: 1.7rem;
+      }
+
+      .dota2 {
+        color: #00ccff;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .dota-logo {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        background: #00ccff;
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        margin-right: 10px;
+        transform: rotate(45deg);
+      }
+
+      .streetfighter {
+        color: #00ccff;
+        font-size: 1.3rem;
+        line-height: 1.1;
+        font-style: italic;
+        font-weight: 700;
+        text-shadow: 0 0 10px rgba(0, 204, 255, 0.7);
+      }
+
+      .streetfighter::first-line {
+        font-size: 1.6rem;
+      }
+
+      .minecraft {
+        color: #00ccff;
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      /* Center Content Styling */
       .center-content {
-        flex: 1;
+        width: 50%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        padding: 40px 20px;
-        margin: 0 230px;
-        z-index: 2;
         text-align: center;
       }
 
-      .logo-container {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+      .trophy-container {
+        margin-bottom: 20px;
+      }
+
+      .trophy-img {
+        width: 150px;
+        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+      }
+
+      .brand-container {
         margin-bottom: 30px;
       }
 
-      .trophy {
-        width: 200px;
-        height: 200px;
-        margin-bottom: 20px;
-        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.7));
-        animation: float 3s ease-in-out infinite;
-        content: url("/api/placeholder/200/200");
-      }
-
-      @keyframes float {
-        0% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
-        100% {
-          transform: translateY(0px);
-        }
-      }
-
       .esportgate-logo {
-        font-size: 48px;
-        font-weight: bold;
+        font-size: 3rem;
+        font-weight: 900;
         letter-spacing: 2px;
-        margin-top: 20px;
-        background: linear-gradient(45deg, #ff00ff, #00ffff);
+        color: #ffffff;
+        text-shadow: 0 0 15px rgba(0, 200, 255, 0.7);
+        background: linear-gradient(90deg, #7c00b3, #081861);
         -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
         background-clip: text;
-        color: transparent;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        padding: 10px 30px;
+        border-radius: 5px;
+        margin-bottom: 5px;
       }
 
-      .logo-subtitle {
-        font-size: 16px;
-        margin-top: 5px;
-        letter-spacing: 3px;
-        color: rgba(255, 255, 255, 0.8);
+      .subtitle {
+        font-size: 0.9rem;
+        color: #bbbbbb;
+        letter-spacing: 1px;
       }
 
-      .title {
-        font-size: 36px;
+      /* Registration Section */
+      .registration-section {
+        width: 100%;
+        max-width: 500px;
         margin: 20px 0;
-        color: #ffd700;
-        text-shadow: 0 0 10px #ffd700;
+      }
+
+      .ready-text {
+        font-size: 1.8rem;
+        color: #ffcc00;
+        margin-bottom: 10px;
         font-weight: bold;
       }
 
-      .countdown-display {
-        background: rgba(0, 0, 0, 0.5);
-        padding: 15px 30px;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        margin: 20px 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .timer-value {
-        font-size: 32px;
-        font-weight: bold;
-        color: white;
-        text-shadow: 0 0 5px white;
-      }
-
-      .timer-label {
-        font-size: 14px;
-        color: rgba(255, 255, 255, 0.8);
-        margin: 0 5px;
-      }
-
-      .timer-separator {
-        font-size: 32px;
-        font-weight: bold;
-        color: rgba(255, 255, 255, 0.5);
-        margin: 0 5px;
+      .event-date {
+        font-size: 1.5rem;
+        color: #ffffff;
+        margin-bottom: 20px;
       }
 
       .registration-form {
         width: 100%;
-        max-width: 500px;
-        margin: 30px auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
       }
 
-      .email-input {
-        width: 100%;
+      .form-control {
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 2px solid #ff0099;
+        color: #ffffff;
         padding: 15px;
+        font-size: 1rem;
+        border-radius: 5px;
         margin-bottom: 15px;
-        background-color: rgba(0, 0, 0, 0.6);
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
-        color: white;
-        text-align: right;
-        font-size: 16px;
-        outline: none;
-        transition: all 0.3s ease;
       }
 
-      .email-input:focus {
-        border-color: #00ffff;
-        box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+      .form-control::placeholder {
+        color: #aaaaaa;
       }
 
       .register-btn {
         width: 100%;
         padding: 15px;
-        background: linear-gradient(45deg, #ffa500, #ffcc00);
-        border: none;
-        border-radius: 8px;
-        color: black;
-        font-size: 20px;
+        font-size: 1.2rem;
         font-weight: bold;
-        cursor: pointer;
+        background: linear-gradient(90deg, #ff9500, #ff5e00);
+        border: none;
+        color: #ffffff;
+        border-radius: 5px;
         transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .register-btn::before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(
-          to right,
-          rgba(255, 255, 255, 0),
-          rgba(255, 255, 255, 0.3),
-          rgba(255, 255, 255, 0)
-        );
-        transform: rotate(45deg);
-        transition: all 0.5s;
-        opacity: 0;
       }
 
       .register-btn:hover {
         transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(255, 165, 0, 0.3);
+        box-shadow: 0 5px 15px rgba(255, 94, 0, 0.5);
       }
 
-      .register-btn:hover::before {
-        animation: shine 1.5s;
+      .benefits-text {
+        margin-top: 15px;
+        font-size: 1rem;
+        color: #ffffff;
       }
 
-      @keyframes shine {
-        0% {
-          left: -50%;
-          opacity: 0;
-        }
-        50% {
-          opacity: 1;
-        }
-        100% {
-          left: 150%;
-          opacity: 0;
-        }
-      }
-
-      .promo-text {
-        font-size: 16px;
-        margin: 20px 0;
-        color: #ffcc00;
-        text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
-      }
-      .video-container {
-        width: 100%;
-        max-width: 700px;
-        margin: 30px auto;
-        border: 2px solid #8b00ff;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 0 30px rgba(139, 0, 255, 0.5);
-        position: relative;
-        aspect-ratio: 16/9;
-      }
-
-      .video-placeholder {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba(0, 0, 0, 0.4);
-        position: relative;
-      }
-
-      .play-button {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background-color: rgba(255, 165, 0, 0.8);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      .play-button:hover {
-        transform: scale(1.1);
-        background-color: rgba(255, 204, 0, 0.9);
-      }
-
-      .play-button::after {
-        content: "";
-        width: 0;
-        height: 0;
-        border-top: 20px solid transparent;
-        border-bottom: 20px solid transparent;
-        border-left: 30px solid #fff;
-        margin-left: 5px;
-      }
-
-      .title {
-        font-size: 36px;
-        margin: 20px 0;
-        color: #ffd700;
-        text-shadow: 0 0 10px #ffd700;
-        font-weight: bold;
-      }
-
-      .subtitle {
-        font-size: 20px;
-        margin-bottom: 25px;
-        color: white;
-        max-width: 600px;
-      }
-      .video-container {
-        max-width: 90%;
-      }
-
+      /* Social Media Icons */
       .social-icons {
         display: flex;
         justify-content: center;
-        margin: 30px 0;
-        gap: 20px;
+        margin-top: 30px;
       }
 
       .social-icon {
-        width: 40px;
-        height: 40px;
-        background-color: white;
-        border-radius: 50%;
-        display: block;
+        font-size: 1.5rem;
+        color: #ffffff;
+        margin: 0 15px;
         transition: all 0.3s ease;
-        cursor: pointer;
-        opacity: 0.7;
       }
 
       .social-icon:hover {
         transform: scale(1.2);
-        opacity: 1;
-        box-shadow: 0 0 15px white;
+        color: #00ccff;
       }
 
-      .instagram {
-        background: url("/api/placeholder/40/40") center/cover no-repeat;
-      }
-
-      .twitter {
-        background: url("/api/placeholder/40/40") center/cover no-repeat;
-      }
-
-      .discord {
-        background: url("/api/placeholder/40/40") center/cover no-repeat;
-      }
-
-      @media (max-width: 1100px) {
-        .main-container {
-          flex-direction: column;
+      /* Media Queries for Responsiveness */
+      @media (max-width: 992px) {
+        .game-logos {
+          width: 30%;
+          padding: 20px 10px;
         }
 
-        .games-sidebar {
-          position: static;
-          width: 100%;
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: center;
-          padding: 10px;
-          background: none;
+        .left-logos {
+          padding-left: 20px;
         }
 
-        .right-games,
-        .left-games {
-          background: none;
+        .right-logos {
+          padding-right: 20px;
         }
 
         .center-content {
-          margin: 0;
+          width: 40%;
         }
 
-        .game {
-          margin: 5px;
-          width: auto;
+        .pubg {
+          font-size: 1.8rem;
         }
 
-        .game:hover {
-          transform: scale(1.05);
+        .lol {
+          font-size: 1.1rem;
+        }
+
+        .colquon {
+          font-size: 1.6rem;
+        }
+
+        .csgo2 {
+          font-size: 1.4rem;
+        }
+
+        .rainbow,
+        .rainbow2 {
+          font-size: 1.3rem;
+        }
+
+        .fallguys {
+          font-size: 1.2rem;
+        }
+
+        .fallguys::first-line {
+          font-size: 1.6rem;
+        }
+
+        .fifa {
+          font-size: 2.2rem;
+        }
+
+        .apex {
+          font-size: 1.3rem;
+        }
+
+        .apex::first-line {
+          font-size: 1.6rem;
+        }
+
+        .cod {
+          font-size: 1.4rem;
+        }
+
+        .fortnite {
+          font-size: 1.6rem;
+        }
+
+        .rocketleague {
+          font-size: 1.2rem;
+        }
+
+        .rocketleague::first-line {
+          font-size: 1.5rem;
+        }
+
+        .dota2 {
+          font-size: 1.3rem;
+        }
+
+        .streetfighter {
+          font-size: 1.1rem;
+        }
+
+        .streetfighter::first-line {
+          font-size: 1.4rem;
+        }
+
+        .minecraft {
+          font-size: 1.2rem;
+        }
+
+        .esportgate-logo {
+          font-size: 2.5rem;
         }
       }
 
       @media (max-width: 768px) {
-        .trophy {
-          width: 120px;
-          height: 120px;
+        .content {
+          flex-direction: column;
         }
 
-        .esportgate-logo {
-          font-size: 36px;
+        .game-logos {
+          flex-direction: row;
+          width: 100%;
+          height: auto;
+          justify-content: center;
+          margin: 20px 0;
         }
 
-        .title {
-          font-size: 24px;
+        .logo {
+          margin: 0 10px;
+          font-size: 1rem;
         }
 
-        .countdown-display {
-          padding: 10px 20px;
+        .center-content {
+          width: 100%;
+          order: -1;
         }
 
-        .timer-value {
-          font-size: 24px;
+        .left-logos,
+        .right-logos {
+          display: none;
         }
 
-        .timer-separator {
-          font-size: 24px;
+        .ready-text {
+          font-size: 1.5rem;
         }
 
-        .audience-overlay {
-          height: 15%;
+        .event-date {
+          font-size: 1.2rem;
         }
       }
 
-      @media (max-width: 480px) {
-        .trophy {
-          width: 100px;
-          height: 100px;
-        }
-
+      @media (max-width: 576px) {
         .esportgate-logo {
-          font-size: 30px;
+          font-size: 2rem;
         }
 
-        .logo-subtitle {
-          font-size: 12px;
+        .subtitle {
+          font-size: 0.8rem;
         }
 
-        .title {
-          font-size: 20px;
-        }
-
-        .countdown-display {
-          padding: 8px 15px;
-        }
-
-        .timer-value {
-          font-size: 20px;
-        }
-
-        .timer-separator {
-          font-size: 20px;
-        }
-
-        .social-icon {
-          width: 30px;
-          height: 30px;
+        .registration-section {
+          padding: 0 15px;
         }
       }
     </style>
   </head>
-  <body>
-    <div class="background"></div>
-    <div class="light-effect" id="light"></div>
-    <div class="audience-overlay"></div>
-
-    <div class="main-container">
-      <!-- Pink Games Sidebar (Right) -->
-      <div class="games-sidebar right-games">
-        <div class="game game-pink">PUBG</div>
-        <div class="game game-pink">LEAGUE OF LEGENDS</div>
-        <div class="game game-pink">COLGUON</div>
-        <div class="game game-pink">CS:GO</div>
-        <div class="game game-pink">RAINBOW SIX</div>
-        <div class="game game-pink">FALL GUYS</div>
-        <div class="game game-pink">MINECRAFT</div>
-      </div>
-
-      <!-- Center Content -->
-      <div class="center-content">
-        <div class="logo-container">
-          <img class="trophy" src="Asset.png" alt="Trophy" />
-          <div class="esportgate-logo">ESPORTGATE</div>
-          <div class="logo-subtitle">GAMING CHAMPIONSHIP COMPANY</div>
+  <div class="container-fluid main-container">
+    <div class="overlay"></div>
+    <div class="content">
+        <!-- Game Logos Left Side (Pink/Purple) -->
+        <div class="game-logos left-logos">
+            <div class="logo pubg">PUBG</div>
+            <div class="logo lol">LEAGUE<br>OF<br>LEGENDS</div>
+            <div class="logo colquon">COLQUON</div>
+            <div class="logo csgo2">CS:GO</div>
+            <div class="logo rainbow">RAINBOW SIX</div>
+            <div class="logo fallguys">FALL<br>GUYS</div>
+            <div class="logo rainbow2">RAINBOW SIX</div>
         </div>
 
-        <h1 class="title">جاهز لدخول عالم التحدي؟</h1>
-        <!-- Video Section -->
-        <div class="video-container">
-          <div class="video-placeholder">
-            <div class="play-button"></div>
-          </div>
-        </div>
-        <div class="countdown-display">
-          <span class="timer-value">30</span>
-          <span class="timer-label">ساعة</span>
-          <span class="timer-separator">:</span>
-          <span class="timer-value">12</span>
-          <span class="timer-label">دقيقة</span>
-          <span class="timer-separator">:</span>
-          <span class="timer-value">05</span>
-          <span class="timer-label">ثانية</span>
+        <!-- Center Trophy and Main Content -->
+        <div class="center-content">
+            <div class="trophy-container">
+                <img src="Asset2.png" alt="Trophy" class="trophy-img">
+            </div>
+            <div class="brand-container">
+                <div class="esportgate-logo">ESPORTGATE</div>
+                <div class="subtitle">GAMING CHAMPIONSHIP<br>COMPANY</div>
+            </div>
+
+            <!-- Registration Section -->
+            <div class="registration-section">
+                <h2 class="ready-text">جاهز لدخول عالم التحدي؟</h2>
+                <p class="event-date">30 حزيران : ساعة 12 دقيقة 05</p>
+                
+                <div class="registration-form">
+                    <div class="form-group mb-3">
+                        <input type="email" class="form-control" id="email" placeholder="بريدك الإلكتروني هنا">
+                    </div>
+                    <button type="button" class="btn register-btn" id="registerBtn">سجل الآن</button>
+                    <p class="benefits-text">احصل على مجانية عند تسجيلك غير الإطلاق!</p>
+                </div>
+            </div>
+
+            <!-- Social Media Icons -->
+            <div class="social-icons">
+                <a href="#" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon discord"><i class="fab fa-discord"></i></a>
+            </div>
         </div>
 
-        <div class="registration-form">
-          <input
-            type="email"
-            class="email-input"
-            placeholder="بريدك الإلكتروني هنا"
-          />
-          <button class="register-btn">سجل الآن</button>
-          <p class="promo-text">احصل على مجانية عند تسجيلك قبل الإطلاق!</p>
+        <!-- Game Logos Right Side (Blue) -->
+        <div class="game-logos right-logos">
+            <div class="logo fifa">FIFA</div>
+            <div class="logo apex">APEX<br>LEGENDS</div>
+            <div class="logo cod">CALL OF DUTY</div>
+            <div class="logo fortnite">FORTNITE</div>
+            <div class="logo rocketleague">ROCKET<br>LEAGUE</div>
+            <div class="logo dota2"><span class="dota-logo"></span>DOTA 2</div>
+            <div class="logo streetfighter">STREET<br>FIGHTER</div>
+            <div class="logo minecraft">MINECRAFT</div>
         </div>
-
-        <div class="social-icons">
-          <a href="#" class="social-icon instagram"></a>
-          <a href="#" class="social-icon twitter"></a>
-          <a href="#" class="social-icon discord"></a>
-        </div>
-      </div>
-
-      <!-- Blue Games Sidebar (Left) -->
-      <div class="games-sidebar left-games">
-        <div class="game game-blue">FIFA</div>
-        <div class="game game-blue">APEX LEGENDS</div>
-        <div class="game game-blue">CALL OF DUTY</div>
-        <div class="game game-blue">FORTNITE</div>
-        <div class="game game-blue">ROCKET LEAGUE</div>
-        <div class="game game-blue">DOTA 2</div>
-        <div class="game game-blue">STREET FIGHTER</div>
-      </div>
     </div>
-
+</div>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
     <script>
-      // Light effect following mouse movement
-      const light = document.getElementById("light");
-
-      document.addEventListener("mousemove", (e) => {
-        const x = e.clientX;
-        const y = e.clientY;
-
-        light.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(128, 0, 255, 0.3), transparent 60%)`;
-      });
-
-      // Trophy glowing effect
-      const trophy = document.querySelector(".trophy");
-      let glowIntensity = 0.5;
-      let increasing = true;
-
-      setInterval(() => {
-        if (increasing) {
-          glowIntensity += 0.05;
-          if (glowIntensity >= 1) {
-            increasing = false;
-          }
-        } else {
-          glowIntensity -= 0.05;
-          if (glowIntensity <= 0.5) {
-            increasing = true;
-          }
-        }
-
-        trophy.style.filter = `drop-shadow(0 0 ${
-          15 * glowIntensity
-        }px rgba(255, 255, 255, ${glowIntensity}))`;
-      }, 100);
-
-      // Game hover effects
-      const games = document.querySelectorAll(".game");
-
-      games.forEach((game) => {
-        game.addEventListener("mouseenter", () => {
-          const color = game.classList.contains("game-pink")
-            ? "rgba(255, 0, 255, 0.5)"
-            : "rgba(0, 255, 255, 0.5)";
-          game.style.boxShadow = `0 0 15px ${color}`;
+     // Wait for the DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize variables
+    const registerBtn = document.getElementById('registerBtn');
+    const emailInput = document.getElementById('email');
+    const gameLogos = document.querySelectorAll('.logo');
+    
+    // Add glow effect to game logos
+    gameLogos.forEach(logo => {
+        // Add random flicker effect to logos
+        setInterval(() => {
+            const randomIntensity = Math.random() * 5 + 10;
+            const currentColor = logo.classList.contains('pubg') || 
+                                logo.classList.contains('lol') || 
+                                logo.classList.contains('colquon') || 
+                                logo.classList.contains('csgo2') || 
+                                logo.classList.contains('rainbow') || 
+                                logo.classList.contains('fallguys') || 
+                                logo.classList.contains('rainbow2') 
+                            ? 'rgba(255, 0, 255, 0.8)' : 'rgba(0, 204, 255, 0.8)';
+            
+            logo.style.textShadow = `0 0 ${randomIntensity}px ${currentColor}`;
+        }, 1000 + Math.random() * 1000); // Different interval for each logo
+        
+        logo.addEventListener('mouseover', function() {
+            const currentColor = this.classList.contains('pubg') || 
+                                this.classList.contains('lol') || 
+                                this.classList.contains('colquon') || 
+                                this.classList.contains('csgo2') || 
+                                this.classList.contains('rainbow') || 
+                                this.classList.contains('fallguys') || 
+                                this.classList.contains('rainbow2') 
+                            ? 'rgba(255, 0, 255, 0.9)' : 'rgba(0, 204, 255, 0.9)';
+            
+            this.style.textShadow = `0 0 25px ${currentColor}`;
+            this.style.transform = 'scale(1.1)';
+            this.style.transition = 'all 0.3s ease';
         });
-
-        game.addEventListener("mouseleave", () => {
-          game.style.boxShadow = "none";
+        
+        logo.addEventListener('mouseout', function() {
+            const currentColor = this.classList.contains('pubg') || 
+                                this.classList.contains('lol') || 
+                                this.classList.contains('colquon') || 
+                                this.classList.contains('csgo2') || 
+                                this.classList.contains('rainbow') || 
+                                this.classList.contains('fallguys') || 
+                                this.classList.contains('rainbow2') 
+                            ? 'rgba(255, 0, 255, 0.8)' : 'rgba(0, 204, 255, 0.8)';
+            
+            this.style.textShadow = `0 0 15px ${currentColor}`;
+            this.style.transform = '';
         });
-      });
-
-      // Countdown timer
-      const timerValues = document.querySelectorAll(".timer-value");
-      let hours = 30;
-      let minutes = 12;
-      let seconds = 5;
-
-      function updateCountdown() {
-        seconds--;
-        if (seconds < 0) {
-          seconds = 59;
-          minutes--;
-          if (minutes < 0) {
-            minutes = 59;
-            hours--;
-            if (hours < 0) {
-              hours = 0;
-              minutes = 0;
-              seconds = 0;
+    });
+    
+    // Trophy animation
+    const trophyImg = document.querySelector('.trophy-img');
+    if (trophyImg) {
+        // Trophy Float Animation
+        let floatValue = 0;
+        const floatAnimation = setInterval(() => {
+            floatValue += 0.02;
+            const yPos = Math.sin(floatValue) * 5;
+            trophyImg.style.transform = `translateY(${yPos}px)`;
+        }, 50);
+        
+        // Add glow effect on hover
+        trophyImg.addEventListener('mouseover', function() {
+            this.style.filter = 'drop-shadow(0 0 25px rgba(255, 255, 255, 0.8))';
+        });
+        
+        trophyImg.addEventListener('mouseout', function() {
+            this.style.filter = 'drop-shadow(0 0 15px rgba(255, 255, 255, 0.5))';
+        });
+    }
+    
+    // Email validation function
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    // Registration button event
+    if (registerBtn) {
+        registerBtn.addEventListener('click', function() {
+            const email = emailInput.value.trim();
+            
+            if (!email) {
+                showAlert('يرجى إدخال بريدك الإلكتروني', 'danger');
+                return;
             }
-          }
-        }
-
-        timerValues[0].textContent = hours.toString().padStart(2, "0");
-        timerValues[1].textContent = minutes.toString().padStart(2, "0");
-        timerValues[2].textContent = seconds.toString().padStart(2, "0");
-      }
-
-      // Start countdown
-      setInterval(updateCountdown, 1000);
-
-      // Register button shine effect
-      const registerBtn = document.querySelector(".register-btn");
-
-      registerBtn.addEventListener("mouseover", () => {
+            
+            if (!isValidEmail(email)) {
+                showAlert('يرجى إدخال بريد إلكتروني صحيح', 'danger');
+                return;
+            }
+            
+            // Simulate registration process (replace with actual API call)
+            registerBtn.disabled = true;
+            registerBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> جاري التسجيل...';
+            
+            setTimeout(() => {
+                registerBtn.disabled = false;
+                registerBtn.textContent = 'سجل الآن';
+                showAlert('تم التسجيل بنجاح! سنتواصل معك قريباً', 'success');
+                emailInput.value = '';
+            }, 1500);
+        });
+    }
+    
+    // Create an alert element
+    function showAlert(message, type) {
+        // Remove any existing alerts
+        const existingAlerts = document.querySelectorAll('.alert');
+        existingAlerts.forEach(alert => alert.remove());
+        
+        // Create new alert
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type} text-center`;
+        alertDiv.role = 'alert';
+        alertDiv.textContent = message;
+        
+        // Add the alert before the form
+        const registrationForm = document.querySelector('.registration-form');
+        registrationForm.parentNode.insertBefore(alertDiv, registrationForm);
+        
+        // Auto dismiss after 3 seconds
         setTimeout(() => {
-          registerBtn.style.boxShadow = "0 10px 20px rgba(255, 165, 0, 0.3)";
-        }, 100);
-      });
-
-      registerBtn.addEventListener("mouseout", () => {
-        registerBtn.style.boxShadow = "none";
-      });
-
-      // Audience movement effect
-      const audienceOverlay = document.querySelector(".audience-overlay");
-      let audiencePosition = 0;
-      const audienceSpeed = 0.5;
-
-      function animateAudience() {
-        audiencePosition += audienceSpeed;
-        if (audiencePosition > 100) {
-          audiencePosition = 0;
+            alertDiv.classList.add('fade');
+            setTimeout(() => alertDiv.remove(), 500);
+        }, 3000);
+    }
+    
+    // Countdown Timer
+    function updateCountdown() {
+        // Target date (June 30, 2025 at 12:05)
+        const targetDate = new Date('2025-06-30T12:05:00');
+        const currentDate = new Date();
+        
+        // Calculate time difference
+        const timeDiff = targetDate - currentDate;
+        
+        // If the date has passed, stop the countdown
+        if (timeDiff <= 0) {
+            document.querySelector('.event-date').textContent = 'الحدث قد بدأ!';
+            return;
         }
+        
+        // Calculate remaining time
+        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+        
+        // Update the countdown display
+        const eventDateElement = document.querySelector('.event-date');
+        if (eventDateElement) {
+            eventDateElement.textContent = `${days} يوم : ${hours} ساعة : ${minutes} دقيقة : ${seconds} ثانية`;
+        }
+    }
+    
+    // Update countdown every second
+    setInterval(updateCountdown, 1000);
+    updateCountdown(); // Initial call
+    
+    // Add neon glow to the ESPORTGATE logo
+    const esportgateLogo = document.querySelector('.esportgate-logo');
+    if (esportgateLogo) {
+        setInterval(() => {
+            const glowIntensity = Math.floor(Math.random() * 10) + 10;
+            esportgateLogo.style.textShadow = `0 0 ${glowIntensity}px rgba(0, 200, 255, 0.7)`;
+        }, 500);
+    }
+    
+    // Create background particle effects
+    createParticles();
+});
 
-        audienceOverlay.style.backgroundPosition = `${audiencePosition}% bottom`;
-        requestAnimationFrame(animateAudience);
-      }
+// Function to create background particles
+function createParticles() {
+    const mainContainer = document.querySelector('.main-container');
+    
+    if (!mainContainer) return;
+    
+    // Create particle container
+    const particleContainer = document.createElement('div');
+    particleContainer.className = 'particle-container';
+    particleContainer.style.position = 'absolute';
+    particleContainer.style.top = '0';
+    particleContainer.style.left = '0';
+    particleContainer.style.width = '100%';
+    particleContainer.style.height = '100%';
+    particleContainer.style.overflow = 'hidden';
+    particleContainer.style.zIndex = '1';
+    
+    mainContainer.appendChild(particleContainer);
+    
+    // Create particles
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        
+        // Random properties
+        const size = Math.random() * 5 + 1;
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        const duration = Math.random() * 20 + 10;
+        const delay = Math.random() * 5;
+        
+        // Set styles
+        particle.style.position = 'absolute';
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.borderRadius = '50%';
+        particle.style.left = `${x}%`;
+        particle.style.top = `${y}%`;
+        particle.style.background = i % 2 === 0 ? 'rgba(124, 0, 179, 0.5)' : 'rgba(8, 24, 97, 0.5)';
+        particle.style.boxShadow = i % 2 === 0 ? '0 0 10px rgba(255, 0, 255, 0.7)' : '0 0 10px rgba(0, 200, 255, 0.7)';
+        particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+        
+        particleContainer.appendChild(particle);
+    }
+    
+    // Add keyframes for animation
+    const styleSheet = document.createElement('style');
+    styleSheet.innerHTML = `
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(${Math.random() * 100}px, ${Math.random() * 100}px); }
+            50% { transform: translate(${Math.random() * -100}px, ${Math.random() * 100}px); }
+            75% { transform: translate(${Math.random() * -100}px, ${Math.random() * -100}px); }
+        }
+    `;
+    document.head.appendChild(styleSheet);
+}
+// Bootstrap Custom Configuration
+// This file extends Bootstrap functionality for the ESPORTGATE landing page
 
-      // Start audience animation
-      requestAnimationFrame(animateAudience);
+document.addEventListener('DOMContentLoaded', function() {
+    // Enable tooltips everywhere
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+    
+    // Enable popovers
+    const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl);
+    });
+    
+    // Custom form validation
+    const forms = document.querySelectorAll('.needs-validation');
+    
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            form.classList.add('was-validated');
+        }, false);
+    });
+    
+    // Customize input focus behavior
+    const formControls = document.querySelectorAll('.form-control');
+    
+    formControls.forEach(input => {
+        // Add glow effect on focus
+        input.addEventListener('focus', function() {
+            this.style.boxShadow = '0 0 15px rgba(255, 0, 153, 0.5)';
+        });
+        
+        input.addEventListener('blur', function() {
+            this.style.boxShadow = '';
+        });
+    });
+    
+    // Custom button hover animation
+    const buttons = document.querySelectorAll('.btn');
+    
+    buttons.forEach(button => {
+        button.addEventListener('mouseover', function() {
+            this.style.transition = 'all 0.3s ease';
+            if (this.classList.contains('register-btn')) {
+                this.style.background = 'linear-gradient(90deg, #ff5e00, #ff9500)';
+            }
+        });
+        
+        button.addEventListener('mouseout', function() {
+            if (this.classList.contains('register-btn')) {
+                this.style.background = 'linear-gradient(90deg, #ff9500, #ff5e00)';
+            }
+        });
+    });
+    
+    // Add responsive behavior for navbar (if added later)
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        }
+    });
+    
+    // Handle modal dialogs behavior (if added later)
+    const modalElements = document.querySelectorAll('.modal');
+    
+    modalElements.forEach(modal => {
+        modal.addEventListener('show.bs.modal', function() {
+            document.body.classList.add('modal-open-custom');
+        });
+        
+        modal.addEventListener('hidden.bs.modal', function() {
+            document.body.classList.remove('modal-open-custom');
+        });
+    });
+    
+    // Handle collapse elements (if added later)
+    const collapseElements = document.querySelectorAll('.collapse');
+    
+    collapseElements.forEach(collapse => {
+        collapse.addEventListener('show.bs.collapse', function() {
+            // Custom behavior when a collapse is shown
+            const parent = this.closest('.collapse-container');
+            if (parent) {
+                parent.classList.add('showing');
+            }
+        });
+        
+        collapse.addEventListener('hidden.bs.collapse', function() {
+            // Custom behavior when a collapse is hidden
+            const parent = this.closest('.collapse-container');
+            if (parent) {
+                parent.classList.remove('showing');
+            }
+        });
+    });
+    
+    // Handle responsive layout changes
+    function handleResponsiveChanges() {
+        const width = window.innerWidth;
+        const centerContent = document.querySelector('.center-content');
+        
+        if (width < 768) {
+            // Mobile layout adjustments
+            if (centerContent) {
+                centerContent.style.width = '100%';
+            }
+        } else if (width < 992) {
+            // Tablet layout adjustments
+            if (centerContent) {
+                centerContent.style.width = '70%';
+            }
+        } else {
+            // Desktop layout reset
+            if (centerContent) {
+                centerContent.style.width = '60%';
+            }
+        }
+    }
+    
+    // Initial call and event listener for resize
+    handleResponsiveChanges();
+    window.addEventListener('resize', handleResponsiveChanges);
+});
     </script>
   </body>
 </html>
